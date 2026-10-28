@@ -1,42 +1,60 @@
+
 class Collection:
 
-    def create_collection(name) -> bool:
+    cursor = None
+
+    def __init__(self, con):
+        self.cursor = con.cursor(prepared=True)
+
+    def create_collection(self, name, description, language, category) -> bool:
         try:
-            with open(f"Collections/{name}.csv","x",encoding="utf-8") as f:
-                pass
+            stmt = ("INSERT INTO collection(collection_name,collection_description,language,category)"
+                    " VALUES (%s,%s,%s,%s)")
+
+            self.cursor.execute(stmt, (name, description, language, category))
         except Exception as e:
             print(e)
             return False
-
         return True
 
-    def add_vocab(name:str ,word_translation:dict) -> bool:
+    def add_vocab(self, word: str, translation: str, collection_id: int) -> bool:
         try:
-            with open(f"Collections/{name}.csv","a",encoding="utf-8") as f:
-                for word, trans in word_translation.items():
-                    f.write(f"{word};{trans}\n")
-                    
+            stmt = ("INSERT INTO word(word,translation)"
+                    " VALUES (%s,%s) WHERE collection_id = %s")
+
+            self.cursor.execute(stmt, (word, translation, collection_id))
         except Exception as e:
             print(e)
             return False
-        
         return True
-    
-    def fetch_collection(name:str) -> dict:
+
+    def fetch_collection(self, collection_id: int):
         try:
-            with open(f"Collections/{name}.csv","r",encoding="utf-8") as f:
-                lines = f.read().split("\n")
-                dici = {}
-                for x in lines:
-                    if x:
-                        cont = x.split(";")
-                        dici[cont[0]] = cont[1]
+            stmt = ("SELECT collection_name, collection_description, language, category FROM collection"
+                    " WHERE collection_id = %s")
+
+            cont = self.cursor.execute(stmt, collection_id)
         except Exception as e:
             print(e)
-            return {}
-        
-        return dici 
+            return None
+        return cont
 
-    def delete_collection(name:str) -> bool:
-        pass
-    
+    def fetch_all_collections(self):
+        try:
+            stmt = "SELECT collection_name, collection_description, language, category FROM collection"
+
+            cont = self.cursor.execute(stmt)
+        except Exception as e:
+            print(e)
+            return None
+        return cont
+
+    def delete_collection(self, collection_id: int) -> bool:
+        try:
+            stmt = "DELETE FROM collection WHERE collection_id = $s"
+
+            self.cursor.execute(stmt, collection_id)
+        except Exception as e:
+            print(e)
+            return False
+        return True
