@@ -7,13 +7,13 @@ from Controllers.CollectionController import CollectionController as Controller
 jan = Tk()
 jan.geometry('640x360')
 jan.title("Language Helper")
-jan.iconbitmap("Views/Common/jul.ico")
+#jan.iconbitmap("Views/Common/jul.ico")
 
 
-title = Label(jan, text="Language Helper", font=Title)
+title = Label(jan, text="Language Helper", font=Title, pady='10')
 title.pack()
 
-f1 = Frame(jan)
+f1 = Frame(jan, pady='50')
 f1.pack()
 
 btnPraticar = Button(f1, text="Praticar")
