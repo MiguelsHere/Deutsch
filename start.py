@@ -13,7 +13,7 @@ jan.title("Language Helper")
 contr = Controller()
 
 if contr.con is None:
-    messagebox.showerror("ERRO", "Houve na conexão de base de dados!")
+    messagebox.showerror("Erro", "Houve um erro na conexão à base de dados!")
     jan.destroy()
 
 title = Label(jan, text="Language Helper", font=Title, pady='10')
@@ -33,7 +33,5 @@ btnGerir.pack()
 
 btnSair = Button(f1, text="Sair", command=jan.destroy, bg="red")
 btnSair.pack()
-
-
 
 jan.mainloop()

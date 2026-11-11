@@ -12,7 +12,7 @@ class CollectionController:
         if self.con is not None:
             self.collection = Collection(self.con)
 
-    def create_collection(self, name, description, language, category) -> bool:
+    def create_collection(self, name, description, language, category,) -> bool:
         return self.collection.create_collection(name, description, language, category)
 
     

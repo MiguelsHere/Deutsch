@@ -1,9 +1,11 @@
 
 class Collection:
 
+    con = None
     cursor = None
 
     def __init__(self, con):
+        self.con = con
         self.cursor = con.cursor(prepared=True)
 
     def create_collection(self, name, description, language, category) -> bool:
@@ -12,6 +14,7 @@ class Collection:
                     " VALUES (%s,%s,%s,%s)")
 
             self.cursor.execute(stmt, (name, description, language, category))
+            self.con.commit()
         except Exception as e:
             print(e)
             return False
