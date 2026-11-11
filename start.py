@@ -25,6 +25,9 @@ btnTeste.pack()
 btnGerir = Button(f1, text="Gerir Coleções")
 btnGerir.pack()
 
+btnSair = Button(f1, text="Sair", command=jan.destroy, bg="red", pady=)
+btnSair.pack()
+
 contr = Controller()
 
 
