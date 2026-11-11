@@ -5,9 +5,10 @@ from Controllers.CollectionController import CollectionController as Controller
 
 
 jan = Tk()
+#jan.iconbitmap("Views/Common/icon.ico")
 jan.geometry('640x360')
 jan.title("Language Helper")
-#jan.iconbitmap("Views/Common/jul.ico")
+
 
 
 title = Label(jan, text="Language Helper", font=Title, pady='10')
@@ -25,14 +26,14 @@ btnTeste.pack()
 btnGerir = Button(f1, text="Gerir Coleções")
 btnGerir.pack()
 
-btnSair = Button(f1, text="Sair", command=jan.destroy, bg="red", pady=)
+btnSair = Button(f1, text="Sair", command=jan.destroy, bg="red")
 btnSair.pack()
 
 contr = Controller()
 
-
 if contr.con is None:
     messagebox.showerror("ERRO", "Houve na conexão de base de dados!")
+    jan.destroy()
 
 
 jan.mainloop()
