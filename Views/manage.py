@@ -23,8 +23,8 @@ def manage(principal, contr):
     jan.title("Language Helper: Gerir Coleções")
     #jan.iconbitmap("Views/Common/icon.ico")
 
-    title = Label(jan, text="Gerir Coleções", font=Title, pady='10')
-    title.pack()
+    titulo = Label(jan, text="Gerir Coleções", font=Title, pady='10')
+    titulo.pack()
 
     f1 = Frame(jan, pady='50')
     f1.pack()
@@ -57,8 +57,12 @@ def manage(principal, contr):
     EntryCategoria = Entry(f1)
     EntryCategoria.grid(row = 3 , column=1)
 
-    btnCriar = Button(f1, text="Criar", command=lambda :try_create_collection(contr, EntryNome.get(), EntryLingua.get(), EntryDescricao.get(), EntryCategoria.get()))
+
+    btnCriar = Button(f1, text="Criar", command=lambda :try_create_collection(contr, EntryNome.get(), EntryLingua.get(), EntryDescricao.get(), EntryCategoria.get().upper()))
     btnCriar.grid(row = 4, column=0)
+
+    btnApagar = Button(f1, text="Apagar", bg="red")
+    btnApagar.grid(row=4, column=1)
 
     btnVoltar = Button(f1, text="Voltar", command=lambda :back(principal, jan))
     btnVoltar.grid(row = 4, column=2)

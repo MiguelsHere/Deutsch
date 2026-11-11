@@ -16,8 +16,8 @@ if contr.con is None:
     messagebox.showerror("Erro", "Houve um erro na conexão à base de dados!")
     jan.destroy()
 
-title = Label(jan, text="Language Helper", font=Title, pady='10')
-title.pack()
+titulo = Label(jan, text="Language Helper", font=Title, pady='10')
+titulo.pack()
 
 f1 = Frame(jan, pady='50')
 f1.pack()
