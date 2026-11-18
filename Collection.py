@@ -37,9 +37,10 @@ class Collection:
     
     def delete_collection(self, collection_id: int) -> bool:
         try:
-            stmt = "DELETE FROM collection WHERE collection_id = $s"
-
-            self.cursor.execute(stmt, collection_id)
+            stmt = "DELETE FROM collection WHERE collection_id = %s"
+            
+            self.cursor.execute(stmt, (collection_id,))
+            self.con.commit()
         except Exception as e:
             print(e)
             return False
@@ -60,7 +61,7 @@ class Collection:
 
     def fetch_collection(self, collection_id: int):
         try:
-            stmt = ("SELECT collection_name, collection_description, language, category FROM collection"
+            stmt = ("SELECT collection_name, language, category FROM collection"
                     " WHERE collection_id = %s")
 
             cont = self.cursor.execute(stmt, collection_id)

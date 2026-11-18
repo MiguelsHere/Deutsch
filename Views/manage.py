@@ -2,7 +2,6 @@ from tkinter import *
 from tkinter import messagebox
 from Views.Common.Fonts import *
 
-
 def back(principal, jan):
     principal.deiconify()
     jan.destroy()
@@ -10,7 +9,7 @@ def back(principal, jan):
 def try_fetch_all_collection(collection):
     cont = collection.fetch_all_collections()
     if not cont:
-        messagebox.showerror("Erro", "Não à coleções!")
+        messagebox.showinfo("Info", "Não à coleções!")
     return cont
 
 def try_create_collection(collection, name: str, language: str, category = ""):
@@ -40,7 +39,7 @@ def try_delete_collection(collection, id: str, collections):
     
         
 def manage(principal, collection):
-
+    
     principal.withdraw()
 
     jan = Toplevel()
@@ -63,21 +62,21 @@ def manage(principal, collection):
 
     #info
     collections = try_fetch_all_collection(collection)
- 
-    lbId = Label(info, text="Id")
-    lbId.grid(row=0, column=0)
+    if collections:
+        lbId = Label(info, text="Id")
+        lbId.grid(row=0, column=0)
 
-    lbNome = Label(info, text="Nome")
-    lbNome.grid(row=0, column=1)
+        lbNome = Label(info, text="Nome")
+        lbNome.grid(row=0, column=1)
 
-    lbLing = Label(info, text="Lingua")
-    lbLing.grid(row=0, column=2)
+        lbLing = Label(info, text="Lingua")
+        lbLing.grid(row=0, column=2)
 
-    lbCat = Label(info, text="Categoria")
-    lbCat.grid(row=0, column=3)
+        lbCat = Label(info, text="Categoria")
+        lbCat.grid(row=0, column=3)
 
-    for i in range(len(collections)):
-        for j in range(4):
+        for i in range(len(collections)):
+            for j in range(4):
                 e = Entry(info, justify=CENTER)
                 e.grid(row=i+1, column=j)
                 e.insert(END, collections[i][j])
