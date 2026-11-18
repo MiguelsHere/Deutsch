@@ -7,11 +7,16 @@ def back(principal, jan):
     principal.deiconify()
     jan.destroy()
 
+def try_fetch_all_collection(collection):
+    if not collection.fetch_all_collections():
+        messagebox.showerror("Erro", "Não foi buscar as coleções!")
+
 def try_create_collection(collection, name,language , description = "", category = ""):
     if collection.create_collection(name, language, description, category):
         messagebox.showinfo("Succeso", "Coleção criada com sucesso!")
     else:
         messagebox.showerror("Erro", "Não foi possivel criar a coleção!")
+        
 
 def manage(principal, collection):
 
@@ -19,52 +24,57 @@ def manage(principal, collection):
 
     jan = Toplevel()
     
-    jan.geometry('640x360')
+    jan.geometry('800x360')
     jan.title("Language Helper: Gerir Coleções")
     jan.iconbitmap("Views/Common/icon.ico")
 
     titulo = Label(jan, text="Gerir Coleções", font=Title, pady='10')
     titulo.pack()
 
-    f1 = Frame(jan, pady='50')
-    f1.pack()
+
+    insert = Frame(jan)
+    insert.pack()
+
+    options = Frame(jan)
+    options.pack()
+
+    
+    LabelNome = Label(insert, text="Nome:")
+    LabelNome.grid(row=3, column=0)
+
+    EntryNome = Entry(insert)
+    EntryNome.grid(row = 3, column=1)
 
 
-    LabelNome = Label(f1, text="Nome:")
-    LabelNome.grid(row=0, column=0)
+    LabelDescricao = Label(insert, text="Descrição:")
+    LabelDescricao.grid(row=3, column=2)
 
-    EntryNome = Entry(f1)
-    EntryNome.grid(row = 0 , column=1)
-
-
-    LabelDescricao = Label(f1, text="Descrição:")
-    LabelDescricao.grid(row=1, column=0)
-
-    EntryDescricao = Entry(f1)
-    EntryDescricao.grid(row = 1 , column=1)
+    EntryDescricao = Entry(insert)
+    EntryDescricao.grid(row = 3, column=3)
 
 
-    LabelLingua = Label(f1, text="Lingua:")
-    LabelLingua.grid(row=2, column=0)
+    LabelLingua = Label(insert, text="Lingua:")
+    LabelLingua.grid(row=3, column=4)
 
-    EntryLingua = Entry(f1)
-    EntryLingua.grid(row = 2, column=1)
-
-
-    LabelCategoria = Label(f1, text="Categoria:")
-    LabelCategoria.grid(row=3, column=0)
-
-    EntryCategoria = Entry(f1)
-    EntryCategoria.grid(row = 3 , column=1)
+    EntryLingua = Entry(insert)
+    EntryLingua.grid(row = 3, column=5)
 
 
-    btnCriar = Button(f1, text="Criar", command=lambda :try_create_collection(collection, EntryNome.get().strip(), EntryLingua.get().strip(), EntryDescricao.get().strip(), EntryCategoria.get().upper().strip()))
-    btnCriar.grid(row = 4, column=0)
+    LabelCategoria = Label(insert, text="Categoria:")
+    LabelCategoria.grid(row=3, column=6)
 
-    btnApagar = Button(f1, text="Apagar", bg="red")
-    btnApagar.grid(row=4, column=1)
+    EntryCategoria = Entry(insert)
+    EntryCategoria.grid(row = 3 , column=7)
 
-    btnVoltar = Button(f1, text="Voltar", command=lambda :back(principal, jan))
-    btnVoltar.grid(row = 4, column=2)
+
+
+    btnCriar = Button(options, text="Criar", command=lambda :try_create_collection(collection, EntryNome.get().strip(), EntryLingua.get().strip(), EntryDescricao.get().strip(), EntryCategoria.get().upper().strip()))
+    btnCriar.grid(row = 0, column=0)
+
+    btnApagar = Button(options, text="Apagar", bg="red")
+    btnApagar.grid(row=0, column=1)
+
+    btnVoltar = Button(options, text="Voltar", command=lambda :back(principal, jan))
+    btnVoltar.grid(row = 0, column=2)
 
     jan.mainloop()
