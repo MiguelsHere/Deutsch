@@ -7,13 +7,13 @@ def back(principal, jan):
     principal.deiconify()
     jan.destroy()
 
-def try_create_collection(contr, name,language , description = "", category = ""):
-    if contr.create_collection(name, language, description, category):
+def try_create_collection(collection, name,language , description = "", category = ""):
+    if collection.create_collection(name, language, description, category):
         messagebox.showinfo("Succeso", "Coleção criada com sucesso!")
     else:
         messagebox.showerror("Erro", "Não foi possivel criar a coleção!")
 
-def manage(principal, contr):
+def manage(principal, collection):
 
     principal.withdraw()
 
@@ -21,7 +21,7 @@ def manage(principal, contr):
     
     jan.geometry('640x360')
     jan.title("Language Helper: Gerir Coleções")
-    #jan.iconbitmap("Views/Common/icon.ico")
+    jan.iconbitmap("Views/Common/icon.ico")
 
     titulo = Label(jan, text="Gerir Coleções", font=Title, pady='10')
     titulo.pack()
@@ -58,7 +58,7 @@ def manage(principal, contr):
     EntryCategoria.grid(row = 3 , column=1)
 
 
-    btnCriar = Button(f1, text="Criar", command=lambda :try_create_collection(contr, EntryNome.get().strip(), EntryLingua.get().strip(), EntryDescricao.get().strip(), EntryCategoria.get().upper().strip()))
+    btnCriar = Button(f1, text="Criar", command=lambda :try_create_collection(collection, EntryNome.get().strip(), EntryLingua.get().strip(), EntryDescricao.get().strip(), EntryCategoria.get().upper().strip()))
     btnCriar.grid(row = 4, column=0)
 
     btnApagar = Button(f1, text="Apagar", bg="red")
@@ -68,5 +68,3 @@ def manage(principal, contr):
     btnVoltar.grid(row = 4, column=2)
 
     jan.mainloop()
-
-        

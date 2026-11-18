@@ -1,12 +1,16 @@
+from mysql import connector
 
 class Collection:
 
     con = None
     cursor = None
 
-    def __init__(self, con):
-        self.con = con
-        self.cursor = con.cursor(prepared=True)
+    def __init__(self):
+        try:
+            self.con = connector.connect(user='root', password='', host='localhost', database='language_helper')
+            self.cursor = self.con.cursor(prepared=True)
+        except Exception as e:
+            print(e)
 
     def create_collection(self, name, description, language, category) -> bool:
         try:

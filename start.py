@@ -1,18 +1,19 @@
 from tkinter import *
 from tkinter import messagebox
-from Views.Common.Fonts import *
-from Controllers.CollectionController import CollectionController as Controller
-from Views.manage import *
+from Collection import *
+from Views.Common import *
+from Views.Manage import *
+
 
 jan = Tk()
 
 jan.geometry('640x360')
 jan.title("Language Helper")
-#jan.iconbitmap("Views/Common/icon.ico")
+jan.iconbitmap("Views/Common/icon.ico")
 
-contr = Controller()
+collection = Collection()
 
-if contr.con is None:
+if collection.con is None:
     messagebox.showerror("Erro", "Houve um erro na conexão à base de dados!")
     jan.destroy()
 
@@ -28,7 +29,7 @@ btnPraticar.pack()
 btnTeste = Button(f1, text="Começar Teste")
 btnTeste.pack()
 
-btnGerir = Button(f1, text="Gerir Coleções",command=lambda :manage(jan, contr))
+btnGerir = Button(f1, text="Gerir Coleções",command=lambda :manage(jan, collection))
 btnGerir.pack()
 
 btnSair = Button(f1, text="Sair", command=jan.destroy, bg="red")
