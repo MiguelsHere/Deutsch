@@ -20,18 +20,24 @@ def try_create_collection(collection, name: str, language: str, category = ""):
         messagebox.showerror("Erro", "Não foi possivel criar a coleção!")
 
 def try_delete_collection(collection, id: str, collections):
-    idnum = int(id)
-    nome = ""
+    try:
+        idnum = int(id)
 
-    for x in collections:
-        if x[0] == idnum:
-            nome = x[1]
+        nome = ""
+
+        for x in collections:
+            if x[0] == idnum:
+                nome = x[1]
     
-    if nome == "":
+        if nome == "":
+            messagebox.showerror("Erro",f"{id} não é um id válido!")
+        else:
+            if messagebox.askyesno("Confirma",f"Tem acerteza que deseja apagar {nome}?"):
+                collection.delete_collection(id)
+    except Exception as e:
+        print(e)
         messagebox.showerror("Erro",f"{id} não é um id válido!")
-    else:
-        if messagebox.askyesno("Confirma",f"Tem acerteza que deseja apagar {nome}?"):
-            collection.delete_collection(id)
+    
         
 def manage(principal, collection):
 
