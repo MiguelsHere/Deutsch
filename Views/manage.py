@@ -9,7 +9,7 @@ def back(principal, jan):
 def try_fetch_all_collection(collection):
     cont = collection.fetch_all_collections()
     if not cont:
-        messagebox.showinfo("Info", "Não à coleções!")
+        messagebox.showinfo("Info", "Não há coleções!")
     return cont
 
 def try_create_collection(collection, name: str, language: str, category = ""):
