@@ -11,5 +11,5 @@ CREATE TABLE `word` (
   `translation` Text NOT NULL,
   `last_try` enum('Sei','N Sei','N Feito') DEFAULT 'N Feito'
   `collection_id` bigint NOT NULL,
-  FOREIGN KEY (`collection_id`) REFERENCES `collection`(`collection_id`) ON DELETE CASCADE,
+  FOREIGN KEY (`collection_id`) REFERENCES `collection`(`collection_id`) ON DELETE CASCADE
 );
