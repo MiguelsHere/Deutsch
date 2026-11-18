@@ -20,13 +20,22 @@ def try_create_collection(collection, name: str, language: str, category = ""):
         messagebox.showerror("Erro", "Não foi possivel criar a coleção!")
 
 def try_delete_collection(collection, id: str, collections):
+    idnum = int(id)
     nome = ""
-    for x in collections:
-        if x[0] == int(id):
-            nome = x[1]
 
-    if messagebox.askyesno("Confirma",f"Tem acerteza que deseja apagar {nome}?"):
-        collection.delete_collection(id)
+    lista = []
+    for x in collections:
+        lista.append([x[0],x[1]])
+
+    for x in lista:
+        if x[0] == idnum:
+            nome = x[1]
+    
+    if nome == "":
+        messagebox.showerror("Erro",f"{id} não é um id válido!")
+    else:
+        if messagebox.askyesno("Confirma",f"Tem acerteza que deseja apagar {nome}?"):
+            collection.delete_collection(id)
         
 def manage(principal, collection):
 
@@ -90,7 +99,6 @@ def manage(principal, collection):
 
     EntryCategoria = Entry(inserir)
     EntryCategoria.grid(row = 3 , column=5)
-
 
     #opcoes
     btnCriar = Button(opcoes, text="Criar", command=lambda: try_create_collection(collection, EntryNome.get().strip(), EntryLingua.get().strip(), EntryCategoria.get().upper().strip()))
