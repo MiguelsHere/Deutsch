@@ -8,16 +8,21 @@ def back(principal, jan):
     jan.destroy()
 
 def try_fetch_all_collection(collection):
-    if not collection.fetch_all_collections():
-        messagebox.showerror("Erro", "Não foi buscar as coleções!")
+    cont = collection.fetch_all_collections()
+    if not cont:
+        messagebox.showerror("Erro", "Não à coleções!")
+    return cont
 
 def try_create_collection(collection, name,language , description = "", category = ""):
     if collection.create_collection(name, language, description, category):
         messagebox.showinfo("Succeso", "Coleção criada com sucesso!")
     else:
         messagebox.showerror("Erro", "Não foi possivel criar a coleção!")
-        
 
+def try_delete_collection(collection, id):
+    if messagebox.askyesno("Confirma","Tem acerteza que deseja apagar?"):
+        collection.delete_collection(id)
+        
 def manage(principal, collection):
 
     principal.withdraw()
@@ -31,50 +36,69 @@ def manage(principal, collection):
     titulo = Label(jan, text="Gerir Coleções", font=Title, pady='10')
     titulo.pack()
 
+    info = Frame (jan, pady='50')
+    info.pack()
 
-    insert = Frame(jan)
-    insert.pack()
+    inserir = Frame(jan)
+    inserir.pack()
 
-    options = Frame(jan)
-    options.pack()
+    opcoes = Frame(jan, pady='25')
+    opcoes.pack()
 
-    
-    LabelNome = Label(insert, text="Nome:")
+    #info
+
+    collections = try_fetch_all_collection(collection)
+ 
+    lbId = Label(info, text="Id")
+    lbId.grid(row=0, column=0)
+
+    lbNome = Label(info, text="Nome")
+    lbNome.grid(row=0, column=1)
+
+    lbLing = Label(info, text="Lingua")
+    lbLing.grid(row=0, column=2)
+
+    lbCat = Label(info, text="Categoria")
+    lbCat.grid(row=0, column=3)
+
+    for i in range(len(collections)):
+        for j in range(4):
+                e = Entry(info, justify=CENTER)
+                e.grid(row=i+1, column=j)
+                e.insert(END, collections[i][j])
+                e.config(state=DISABLED)
+
+    #insert
+    LabelNome = Label(inserir, text="Nome:")
     LabelNome.grid(row=3, column=0)
 
-    EntryNome = Entry(insert)
+    EntryNome = Entry(inserir)
     EntryNome.grid(row = 3, column=1)
 
+    LabelLingua = Label(inserir, text="Lingua:")
+    LabelLingua.grid(row=3, column=2)
 
-    LabelDescricao = Label(insert, text="Descrição:")
-    LabelDescricao.grid(row=3, column=2)
+    EntryLingua = Entry(inserir)
+    EntryLingua.grid(row = 3, column=3)
 
-    EntryDescricao = Entry(insert)
-    EntryDescricao.grid(row = 3, column=3)
+    LabelCategoria = Label(inserir, text="Categoria:")
+    LabelCategoria.grid(row=3, column=4)
 
-
-    LabelLingua = Label(insert, text="Lingua:")
-    LabelLingua.grid(row=3, column=4)
-
-    EntryLingua = Entry(insert)
-    EntryLingua.grid(row = 3, column=5)
+    EntryCategoria = Entry(inserir)
+    EntryCategoria.grid(row = 3 , column=5)
 
 
-    LabelCategoria = Label(insert, text="Categoria:")
-    LabelCategoria.grid(row=3, column=6)
-
-    EntryCategoria = Entry(insert)
-    EntryCategoria.grid(row = 3 , column=7)
-
-
-
-    btnCriar = Button(options, text="Criar", command=lambda :try_create_collection(collection, EntryNome.get().strip(), EntryLingua.get().strip(), EntryDescricao.get().strip(), EntryCategoria.get().upper().strip()))
+    #options
+    btnCriar = Button(opcoes, text="Criar", command=lambda: try_create_collection(collection, EntryNome.get().strip(), EntryLingua.get().strip(), EntryDescricao.get().strip(), EntryCategoria.get().upper().strip()))
     btnCriar.grid(row = 0, column=0)
 
-    btnApagar = Button(options, text="Apagar", bg="red")
+    btnApagar = Button(opcoes, text="Apagar", bg="red", command=lambda: try_delete_collection(collection, idparaApagar.get()))
     btnApagar.grid(row=0, column=1)
 
-    btnVoltar = Button(options, text="Voltar", command=lambda :back(principal, jan))
-    btnVoltar.grid(row = 0, column=2)
+    idparaApagar = Entry(opcoes, width="5", justify="center")
+    idparaApagar.grid(row=0,column=2)
+
+    btnVoltar = Button(opcoes, text="Voltar", command=lambda :back(principal, jan))
+    btnVoltar.grid(row = 0, column=3)
 
     jan.mainloop()

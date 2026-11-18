@@ -12,17 +12,40 @@ class Collection:
         except Exception as e:
             print(e)
 
-    def create_collection(self, name, description, language, category) -> bool:
+    def fetch_all_collections(self):
         try:
-            stmt = ("INSERT INTO collection(collection_name,collection_description,language,category)"
-                    " VALUES (%s,%s,%s,%s)")
+            stmt = "SELECT collection_id, collection_name, language, category FROM collection"
 
-            self.cursor.execute(stmt, (name, description, language, category))
+            self.cursor.execute(stmt)
+            cont = self.cursor.fetchall()
+        except Exception as e:
+            print(e)
+            return None
+        return cont
+    
+    def create_collection(self, name, language, category) -> bool:
+        try:
+            stmt = ("INSERT INTO collection(collection_name,language,category)"
+                    " VALUES (%s,%s,%s)")
+
+            self.cursor.execute(stmt, (name, language, category))
             self.con.commit()
         except Exception as e:
             print(e)
             return False
         return True
+    
+    def delete_collection(self, collection_id: int) -> bool:
+        try:
+            stmt = "DELETE FROM collection WHERE collection_id = $s"
+
+            self.cursor.execute(stmt, collection_id)
+        except Exception as e:
+            print(e)
+            return False
+        return True
+
+
 
     def add_vocab(self, word: str, translation: str, collection_id: int) -> bool:
         try:
@@ -45,23 +68,3 @@ class Collection:
             print(e)
             return None
         return cont
-
-    def fetch_all_collections(self):
-        try:
-            stmt = "SELECT collection_name, collection_description, language, category FROM collection"
-
-            cont = self.cursor.execute(stmt)
-        except Exception as e:
-            print(e)
-            return None
-        return cont
-
-    def delete_collection(self, collection_id: int) -> bool:
-        try:
-            stmt = "DELETE FROM collection WHERE collection_id = $s"
-
-            self.cursor.execute(stmt, collection_id)
-        except Exception as e:
-            print(e)
-            return False
-        return True
