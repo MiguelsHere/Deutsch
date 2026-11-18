@@ -19,8 +19,12 @@ def try_create_collection(collection, name,language , description = "", category
     else:
         messagebox.showerror("Erro", "Não foi possivel criar a coleção!")
 
-def try_delete_collection(collection, id):
-    if messagebox.askyesno("Confirma","Tem acerteza que deseja apagar?"):
+def try_delete_collection(collection, id, collections):
+    for x in collections:
+        if x[0] == id:
+            nome = x[1]
+
+    if messagebox.askyesno("Confirma",f"Tem acerteza que deseja apagar {nome}?"):
         collection.delete_collection(id)
         
 def manage(principal, collection):
@@ -46,7 +50,6 @@ def manage(principal, collection):
     opcoes.pack()
 
     #info
-
     collections = try_fetch_all_collection(collection)
  
     lbId = Label(info, text="Id")
@@ -68,7 +71,7 @@ def manage(principal, collection):
                 e.insert(END, collections[i][j])
                 e.config(state=DISABLED)
 
-    #insert
+    #inserir
     LabelNome = Label(inserir, text="Nome:")
     LabelNome.grid(row=3, column=0)
 
@@ -88,7 +91,7 @@ def manage(principal, collection):
     EntryCategoria.grid(row = 3 , column=5)
 
 
-    #options
+    #opcoes
     btnCriar = Button(opcoes, text="Criar", command=lambda: try_create_collection(collection, EntryNome.get().strip(), EntryLingua.get().strip(), EntryCategoria.get().upper().strip()))
     btnCriar.grid(row = 0, column=0)
 
