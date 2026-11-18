@@ -13,15 +13,16 @@ def try_fetch_all_collection(collection):
         messagebox.showerror("Erro", "Não à coleções!")
     return cont
 
-def try_create_collection(collection, name, language, category = ""):
+def try_create_collection(collection, name: str, language: str, category = ""):
     if collection.create_collection(name, language, category):
         messagebox.showinfo("Succeso", "Coleção criada com sucesso!")
     else:
         messagebox.showerror("Erro", "Não foi possivel criar a coleção!")
 
-def try_delete_collection(collection, id, collections):
+def try_delete_collection(collection, id: str, collections):
+    nome = ""
     for x in collections:
-        if x[0] == id:
+        if x[0] == int(id):
             nome = x[1]
 
     if messagebox.askyesno("Confirma",f"Tem acerteza que deseja apagar {nome}?"):
@@ -95,7 +96,7 @@ def manage(principal, collection):
     btnCriar = Button(opcoes, text="Criar", command=lambda: try_create_collection(collection, EntryNome.get().strip(), EntryLingua.get().strip(), EntryCategoria.get().upper().strip()))
     btnCriar.grid(row = 0, column=0)
 
-    btnApagar = Button(opcoes, text="Apagar", bg="red", command=lambda: try_delete_collection(collection, idparaApagar.get()))
+    btnApagar = Button(opcoes, text="Apagar", bg="red", command=lambda: try_delete_collection(collection, idparaApagar.get(), collections))
     btnApagar.grid(row=0, column=1)
 
     idparaApagar = Entry(opcoes, width="5", justify="center")
