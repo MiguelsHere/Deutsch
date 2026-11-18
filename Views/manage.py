@@ -23,11 +23,7 @@ def try_delete_collection(collection, id: str, collections):
     idnum = int(id)
     nome = ""
 
-    lista = []
     for x in collections:
-        lista.append([x[0],x[1]])
-
-    for x in lista:
         if x[0] == idnum:
             nome = x[1]
     
