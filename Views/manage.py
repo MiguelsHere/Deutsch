@@ -13,8 +13,8 @@ def try_fetch_all_collection(collection):
         messagebox.showerror("Erro", "Não à coleções!")
     return cont
 
-def try_create_collection(collection, name,language , description = "", category = ""):
-    if collection.create_collection(name, language, description, category):
+def try_create_collection(collection, name, language, category = ""):
+    if collection.create_collection(name, language, category):
         messagebox.showinfo("Succeso", "Coleção criada com sucesso!")
     else:
         messagebox.showerror("Erro", "Não foi possivel criar a coleção!")
