@@ -89,7 +89,7 @@ def manage(principal, collection):
 
 
     #options
-    btnCriar = Button(opcoes, text="Criar", command=lambda: try_create_collection(collection, EntryNome.get().strip(), EntryLingua.get().strip(), EntryDescricao.get().strip(), EntryCategoria.get().upper().strip()))
+    btnCriar = Button(opcoes, text="Criar", command=lambda: try_create_collection(collection, EntryNome.get().strip(), EntryLingua.get().strip(), EntryCategoria.get().upper().strip()))
     btnCriar.grid(row = 0, column=0)
 
     btnApagar = Button(opcoes, text="Apagar", bg="red", command=lambda: try_delete_collection(collection, idparaApagar.get()))
